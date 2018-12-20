@@ -1,6 +1,6 @@
-<p style="text-align: center"> FeathersJS </p>
+FeathersJS
 ===
-  ---
+
 **I. FeathersJS là gì?** 
   * FeathersJS là mẫu kiến trúc và bộ công cụ được tạo ra để hỗ trợ dựng REST APIs và ứng dụng thời gian thực.
   * Nó có 2 thành phần chính là Service và Hook:
