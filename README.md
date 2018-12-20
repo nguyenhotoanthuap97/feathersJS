@@ -27,7 +27,7 @@ FeathersJS
     * Thiết đặt Model cho service là Model của database vừa khai báo
     * Chạy app
     * Có thể sử dụng các api tương tác với database một cách bình thường với các phương thức REST phù hợp:
-      | **API** | **REST method** |
+    * | **API** | **REST method** |
       |:----:|:-----------:|
       |Create| Post        |
       |Find (Get all)| Get |
