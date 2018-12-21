@@ -48,9 +48,9 @@ MongoClient.connect('mongodb://localhost:27017/Feathers').then(client => {
         return context;
       },
       find: async context => {
-        context.params.query = {
-          type: 'accessory'
-        };
+        // context.params.query = {
+        //   type: 'accessory'
+        // };
         return context;
       }
     },

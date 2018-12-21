@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>FeathersJS demo</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <center>
+    <h1>Đây là demo FeathersJS</h1>
+  </center>
+
+  <div class="container">
+    <div class="row" style="background-color: rgb(235, 235, 235); border-radius: 5px">
+      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <h2>Thêm sản phẩm</h2>
+        <form>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Nhập tên sản phẩm...">
+          </div>
+          <div class="form-group">
+            <label for="type">Type</label>
+            <input type="text" class="form-control" id="type" placeholder="Nhập loại sản phẩm...">
+          </div>
+          <div class="form-group">
+            <label for="price">Price</label>
+            <input type="text" class="form-control" id="price" placeholder="Nhập giá sản phẩm...">
+          </div>
+          <button type="button" class="btn btn-success" onclick="getData()" style="float:right; width: 100px">Add</button>
+        </form>
+      </div>
+      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+
+      </div>
+      <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+        <h2>Danh sách sản phẩm</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Type</th>
+              <th scope="col">Price</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/@feathersjs/client@^3.0.0/dist/feathers.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+  <script>
+    const socket = io('http://localhost:8088');
+    const app = feathers();
+
+    app.configure(feathers.socketio(socket));
+
+    const products = app.service('mongotest');
+
+    // fetch(url)
+    //   .then((resp) => resp.json())
+    //   .then((data) => {
+    //     document.getElementById('table-body').innerHTML = data;
+    //   })
+
+    reLoad();
+
+    // Log newly created messages
+    products.on('created', message => {
+      reLoad();
+    });
+    // // Create a new message and then get a list of all messages
+    // messages.create({
+    //     text: 'Hello from the browser'
+    //   })
+    //   .then(() => messages.find())
+    //   .then(page => console.log('Messages', page));
+    function getData() {
+      var name = document.getElementById('name').value;
+      var type = document.getElementById('type').value;
+      var price = document.getElementById('price').value;
+      var json = {
+        'name': name,
+        'type': type,
+        'price': price
+      }
+
+      products.create(json).then(() => reLoad());
+    }
+
+    function reLoad() {
+      products.find().then(data => {
+        var table = '';
+        for (let i = 0; i < data.length; i++) {
+          table +=
+            `<tr>
+                    <th scope="row">${data[i]._id}</th>
+                    <td>${data[i].name}</td>
+                    <td>${data[i].type}</td>
+                    <td>$${data[i].price}</td>
+                  </tr>`;
+        }
+        document.getElementById('table-body').innerHTML = table;
+      });
+    }
+  </script>
+</body>
+
+</html>
