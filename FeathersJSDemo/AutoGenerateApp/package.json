@@ -1,0 +1,57 @@
+{
+  "name": "auto-generate-app",
+  "description": "",
+  "version": "0.0.0",
+  "homepage": "",
+  "main": "src",
+  "keywords": [
+    "feathers"
+  ],
+  "author": {
+    "name": "Nguyễn Hồ Toàn Thư",
+    "email": "nguyenhotoanthuap97@gmail.com"
+  },
+  "contributors": [],
+  "bugs": {},
+  "directories": {
+    "lib": "src",
+    "test": "test/"
+  },
+  "engines": {
+    "node": "^10.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "scripts": {
+    "test": "npm run eslint && NODE_ENV= npm run jest",
+    "eslint": "eslint src/. test/. --config .eslintrc.json",
+    "dev": "nodemon src/",
+    "start": "node src/",
+    "jest": "jest"
+  },
+  "dependencies": {
+    "@feathersjs/authentication": "^2.1.14",
+    "@feathersjs/authentication-jwt": "^2.0.8",
+    "@feathersjs/authentication-local": "^1.2.8",
+    "@feathersjs/configuration": "^2.0.5",
+    "@feathersjs/errors": "^3.3.5",
+    "@feathersjs/express": "^1.2.7",
+    "@feathersjs/feathers": "^3.2.3",
+    "@feathersjs/socketio": "^3.2.8",
+    "compression": "^1.7.3",
+    "cors": "^2.8.5",
+    "feathers-errors": "^2.9.2",
+    "feathers-mongodb": "^3.4.0",
+    "helmet": "^3.15.0",
+    "mongodb": "^3.1.10",
+    "mongodb-core": "^3.1.9",
+    "serve-favicon": "^2.5.0",
+    "winston": "^3.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "jest": "^23.6.0",
+    "nodemon": "^1.18.9",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2"
+  }
+}

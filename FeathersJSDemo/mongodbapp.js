@@ -29,10 +29,10 @@ app.use((req, res, next) => {
 })
 
 MongoClient.connect('mongodb://localhost:27017/Feathers').then(client => {
-  app.use('mongotest', service({
+  app.use('products', service({
     Model: client.db('Feathers').collection('products')
   }));
-  app.service('mongotest').hooks({
+  app.service('products').hooks({
     before: {
       create: async context => {
         context.data.createAt = new Date();

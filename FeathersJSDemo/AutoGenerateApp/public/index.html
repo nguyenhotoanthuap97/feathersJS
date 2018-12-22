@@ -23,8 +23,21 @@
     <h1>Đây là demo FeathersJS</h1>
   </center>
 
-  <div class="container">
-    <div class="row" style="background-color: rgb(235, 235, 235); border-radius: 5px">
+  <div id="app" class="flex	flex-column"></div>
+
+  <script src="https://unpkg.com/@feathersjs/client@^3.0.0/dist/feathers.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+  <script>
+    const socket = io('http://localhost:3032');
+    const app = feathers();
+
+    app.configure(feathers.socketio(socket));
+  
+    const products = app.service('products');
+
+    var appHtml =
+      `<div class="container">
+        <div class="row" style="background-color: rgb(235, 235, 235); border-radius: 5px; padding: 50px 0px">
       <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <h2>Thêm sản phẩm</h2>
         <form>
@@ -62,22 +75,14 @@
         </table>
       </div>
     </div>
-  </div>
+  </div>`;
 
-  <script src="https://unpkg.com/@feathersjs/client@^3.0.0/dist/feathers.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-  <script>
-    const socket = io('http://localhost:8088');
-    const app = feathers();
+    const showApp = async () => {
+      document.getElementById('app').innerHTML = appHtml;
+      reLoad();
+    };
 
-    app.configure(feathers.socketio(socket));
-    app.configure(feathers.authentication({
-      storage: window.localStorage
-    }));
-
-    const products = app.service('products');
-
-    reLoad();
+    showApp();
 
     products.on('created', message => {
       reLoad();
@@ -109,7 +114,8 @@
     }
 
     function reLoad() {
-      products.find().then(data => {
+      products.find().then(res => {
+        var data = res.data;
         var table = '';
         for (let i = 0; i < data.length; i++) {
           table +=
@@ -123,6 +129,7 @@
         document.getElementById('table-body').innerHTML = table;
       });
     }
+
   </script>
 </body>
 
